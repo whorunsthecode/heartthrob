@@ -141,6 +141,48 @@ body{font-family:'Fredoka',system-ui,-apple-system,sans-serif;color:var(--ink);m
 .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;
   padding:11px 20px;border-radius:20px;font-size:14px;font-weight:500;opacity:0;transition:.3s;z-index:60;pointer-events:none}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---------- EDITION + DAILY ---------- */
+.edition{font-size:11px;font-weight:600;letter-spacing:1.4px;color:var(--ink2);text-transform:uppercase;margin-top:5px;text-align:center}
+.edition b{color:var(--pink2)}
+.daily{margin-top:4px;font-size:12px;font-weight:600;color:#fff;background:linear-gradient(90deg,#ffb3df,#b39bff);padding:7px 16px;border-radius:16px;box-shadow:0 5px 12px rgba(150,120,190,.24)}
+.daily.spent{background:rgba(255,255,255,.55);color:var(--ink2);box-shadow:none}
+
+/* ---------- INCOMING MATCH BANNER ---------- */
+.matchbar{width:100%;max-width:360px;margin-top:14px;background:linear-gradient(90deg,#ffd9f0,#e6dcff);border-radius:18px;padding:12px 16px;text-align:center;font-size:13.5px;font-weight:500;color:var(--ink);line-height:1.4;box-shadow:0 6px 14px rgba(150,120,190,.16)}
+.matchbar b{color:var(--pink2);font-weight:700}
+
+/* ---------- TEASER ---------- */
+.teaser{width:100%;max-width:340px;margin-top:18px;background:rgba(255,255,255,.5);border:1.5px solid rgba(255,255,255,.6);border-radius:24px;padding:16px;backdrop-filter:blur(5px);
+  box-shadow:0 8px 18px rgba(150,120,190,.14);text-align:center;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:150px;justify-content:center;transition:opacity .35s}
+.teaser.fadeo{opacity:0}
+.teaser .tl{font-size:11px;font-weight:600;letter-spacing:1.2px;color:var(--ink2);text-transform:uppercase}
+.teaser img{width:52px;margin:4px 0 2px}
+.teaser .tn{font-size:21px;font-weight:700;color:var(--ink)}
+.teaser .tm{font-size:12px;font-weight:600;letter-spacing:.7px;color:var(--pink2)}
+
+/* ---------- COMPATIBILITY ---------- */
+.vs-wrap{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:22px}
+.vs-slot{display:flex;flex-direction:column;align-items:center;gap:7px;width:100px}
+.vs-coin{width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 6px 14px rgba(150,120,190,.18)}
+.vs-coin img{width:84%}
+.vs-coin.q{font-size:34px;color:var(--ink2);font-weight:700}
+.vs-name{font-size:12.5px;font-weight:600;color:var(--ink);text-align:center;line-height:1.2;min-height:30px}
+.vs-x{font-size:22px;font-weight:700;color:var(--pink2)}
+.pickgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:360px;margin-top:24px}
+.pickcell{background:var(--card);border:2px solid transparent;border-radius:18px;padding:11px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;
+  box-shadow:0 5px 12px rgba(150,120,190,.14);transition:transform .08s,border-color .15s,background .15s}
+.pickcell:active{transform:scale(.96)}
+.pickcell img{width:44px}
+.pickcell span{font-size:11.5px;font-weight:600;color:var(--ink);text-align:center;line-height:1.15}
+.cmp-result{width:100%;display:flex;flex-direction:column;align-items:center}
+.cmp-verdict{font-size:30px;font-weight:700;text-align:center;margin-top:20px;line-height:1.12;
+  background:linear-gradient(120deg,#ff7ec4,#9a7bff 52%,#54c2ff);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 2px 10px rgba(255,150,220,.35))}
+.cmp-score{text-align:center;font-size:13px;font-weight:600;color:var(--ink2);margin-top:16px;letter-spacing:.8px}
+.cmp-bar{height:13px;background:#efe6f7;border-radius:7px;overflow:hidden;width:100%;max-width:300px;margin:9px auto 0}
+.cmp-bar i{display:block;height:100%;border-radius:7px;width:0;background:linear-gradient(90deg,#ffb3df,#b39bff,#8fc8ff);transition:width 1s cubic-bezier(.3,1,.4,1)}
+.cmp-line{font-size:15.5px;line-height:1.5;text-align:center;color:var(--ink);font-weight:500;margin-top:18px;max-width:360px;padding:0 6px}
 </style>
 </head>
 <body>
@@ -151,11 +193,20 @@ body{font-family:'Fredoka',system-ui,-apple-system,sans-serif;color:var(--ink);m
 
   <section id="intro" class="screen on">
     <div class="brand">heartthrob gacha</div>
+    <div class="edition" id="edition"></div>
     <h1 class="hero-title">what's your<br>romantic<br>archetype?</h1>
     <p class="hero-sub">answer 7 questions. get lovingly attacked. pull a collectible coin you probably deserve.</p>
     <img id="introMachine" class="machine-hero intro" alt="gacha machine">
+    <div class="matchbar" id="matchBar" style="display:none"></div>
+    <div class="teaser" id="teaser" style="display:none">
+      <div class="tl">you might pull…</div>
+      <img id="teaserImg" alt="">
+      <div class="tn" id="teaserN"></div>
+      <div class="tm" id="teaserM"></div>
+    </div>
     <div id="introColl" class="coll" style="display:none"><h4>YOUR COLLECTION</h4><div id="introShelf" class="shelf"></div></div>
     <div class="grow"></div>
+    <span class="daily" id="dailyBadge"></span>
     <button class="btn primary mt" onclick="startQuiz()">start the quiz</button>
     <div class="foot">made by <a href="#">@karmenbuilds</a></div>
   </section>
@@ -197,13 +248,37 @@ body{font-family:'Fredoka',system-ui,-apple-system,sans-serif;color:var(--ink);m
       </div>
     </div>
     <div class="tagline" id="cTag"></div>
+    <button class="btn primary mt" id="matchBtn" style="display:none" onclick="openIncomingMatch()"></button>
     <button class="btn primary mt" onclick="shareCard()">save &amp; share my card</button>
     <div class="btnrow mt">
-      <button class="btn sm" onclick="compareFriend()">compare with a friend</button>
+      <button class="btn sm" onclick="openCompat()">compare with a friend</button>
       <button class="btn sm" onclick="pullAgain()">pull again</button>
     </div>
     <button class="btn ghost mt" onclick="goIntro()">retake the quiz</button>
     <div id="revColl" class="coll" style="display:none"><h4>YOUR COLLECTION</h4><div id="revShelf" class="shelf"></div></div>
+    <div class="foot">what's <i>your</i> type? · <a href="#">@karmenbuilds</a></div>
+  </section>
+
+  <section id="compat" class="screen">
+    <div class="brand">compatibility check</div>
+    <div class="kicker mt" id="cmpKick">tap your situationship's type 👇</div>
+    <div class="vs-wrap">
+      <div class="vs-slot"><div class="vs-coin" id="vsYou"></div><div class="vs-name" id="vsYouN"></div></div>
+      <div class="vs-x">✕</div>
+      <div class="vs-slot"><div class="vs-coin q" id="vsThem">?</div><div class="vs-name" id="vsThemN">?</div></div>
+    </div>
+    <div class="pickgrid" id="pickGrid"></div>
+    <button class="btn ghost mt" id="sendTypeBtn" onclick="shareMyType()">or send your type to a friend</button>
+    <div class="cmp-result" id="cmpResult" style="display:none">
+      <div class="cmp-verdict" id="cmpVerdict"></div>
+      <div class="cmp-score" id="cmpScore"></div>
+      <div class="cmp-bar"><i id="cmpBar"></i></div>
+      <div class="cmp-line" id="cmpLine"></div>
+      <button class="btn primary mt" onclick="shareMatch()">share this match 💌</button>
+      <button class="btn ghost mt" onclick="resetCompat()">compare another</button>
+    </div>
+    <div class="grow"></div>
+    <button class="btn ghost mt" onclick="backFromCompat()">← back to my card</button>
     <div class="foot">what's <i>your</i> type? · <a href="#">@karmenbuilds</a></div>
   </section>
 
@@ -292,8 +367,46 @@ const QUIZ=[
    ["I fall for the idea of them, not them","romantic"]]}
 ];
 const FIN=[["clear","Clear",60],["chrome","Chrome",28],["holo","Holographic",9],["prismatic","Prismatic",3]];
+const BOOST=[["clear","Clear",40],["chrome","Chrome",30],["holo","Holographic",20],["prismatic","Prismatic",10]];
 
-let qi=0,scores={},result=null,finish=null;
+/* seasonal edition — flavor stamp that rotates with the calendar */
+function season(){const m=new Date().getMonth()+1;
+  if(m>=6&&m<=8)return{id:'summer',name:'Summer Situationship',emoji:'☀️'};
+  if(m>=9&&m<=10)return{id:'cuffing',name:'Cuffing Season',emoji:'🍂'};
+  if(m===11||m===12||m<=1)return{id:'winter',name:'Hibernation Heartbreak',emoji:'🧣'};
+  if(m===2)return{id:'valentine',name:"Valentine's Massacre",emoji:'💘'};
+  return{id:'spring',name:'Spring Delusion',emoji:'🌸'};}
+const SEASON=season();
+
+/* compatibility — the two-player payoff. keyed by sorted archetype pair */
+function ckey(a,b){return [a,b].sort().join('|');}
+function vtier(s){return s>=75?'MATCHED IN HELL 😈':s>=60?'CHAOTICALLY COMPATIBLE 💞':s>=45?"IT'S COMPLICATED 🌀":'DOOMED (AFFECTIONATE) ☠️';}
+const COMPAT={
+  'fixer|fixer':{s:47,l:"Two contractors, zero clients. So… who's the renovation project now?"},
+  'fixer|ghost':{s:52,l:"You'll renovate; they'll move out unannounced mid-reno. Permits void."},
+  'fixer|manager':{s:49,l:"You can't renovate someone who's subletting four other people."},
+  'fixer|overthinker':{s:84,l:"You ARE the problem; they love a problem. Codependent and absolutely thriving."},
+  'fixer|romantic':{s:68,l:"He has potential AND a wedding date he hasn't been told about yet."},
+  'fixer|yearner':{s:62,l:"All that patience, aimed at someone who won't text first. Tragic synergy."},
+  'ghost|ghost':{s:35,l:"Two ghosts haunting an empty group chat. Nobody texts. Nobody wins."},
+  'ghost|manager':{s:58,l:"Two avoidants keeping it casual into the heat death of the universe."},
+  'ghost|overthinker':{s:48,l:"A horror movie where the call is coming from inside the read receipt."},
+  'ghost|romantic':{s:66,l:"She plans the wedding; he's already left the country. Pure cinema."},
+  'ghost|yearner':{s:78,l:"You'll wait by the phone; they'll vanish into the fog. Iconic, rewatchable."},
+  'manager|manager':{s:53,l:"Two rotations, one calendar conflict. May the better CRM win."},
+  'manager|overthinker':{s:46,l:"You'll decode the mixed signals — there are five of you to decode them from."},
+  'manager|romantic':{s:45,l:"One's writing vows; the other's writing this weekend's rotation."},
+  'manager|yearner':{s:60,l:"One of you catches feelings. Statistically? The yearner. Always the yearner."},
+  'overthinker|overthinker':{s:44,l:"The longest 'so… are we okay?' in recorded human history."},
+  'overthinker|romantic':{s:50,l:"One picks the venue; the other reads impending doom into the venue's font."},
+  'overthinker|yearner':{s:55,l:"You'll both analyze one text for three hours and then send absolutely nothing."},
+  'romantic|romantic':{s:72,l:"Matched in heaven, evicted from reality. Wedding's booked, you've met twice."},
+  'romantic|yearner':{s:70,l:"Two delulus in love with a relationship that doesn't exist yet. Honestly? Cute."},
+  'yearner|yearner':{s:41,l:"Two unsent paragraphs in a trench coat. A flawless stalemate of longing."}
+};
+function compat(a,b){const d=COMPAT[ckey(a,b)]||{s:50,l:"the math is unclear but the vibes are deeply ominous."};return{s:d.s,l:d.l,v:vtier(d.s)};}
+
+let qi=0,scores={},result=null,finish=null,incoming=null,cmpThem=null,lastDaily=false;
 const $=id=>document.getElementById(id);
 function show(s){document.querySelectorAll('.screen').forEach(e=>e.classList.remove('on'));$(s).classList.add('on');window.scrollTo(0,0);}
 function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),1900);}
@@ -325,8 +438,8 @@ $('introMachine').src=IMG.machine;$('pullMachine').src=IMG.machine;$('capsule').
     h+=`<span class="sp" style="left:${x}%;top:${y}%;font-size:${s}px;animation-delay:${d}s">${ch[i%ch.length]}</span>`;}
   box.innerHTML=h;})();
 
-function goIntro(){tick();qi=0;scores={};renderColl();show('intro');}
-function startQuiz(){pop();qi=0;scores={};Object.keys(ARCH).forEach(k=>scores[k]=0);renderQ();show('quiz');}
+function goIntro(){tick();qi=0;scores={};renderColl();updateMatchBar();updateDaily();startTeaser();show('intro');}
+function startQuiz(){pop();qi=0;scores={};Object.keys(ARCH).forEach(k=>scores[k]=0);stopTeaser();renderQ();show('quiz');}
 function renderDots(){let h='';for(let i=0;i<QUIZ.length;i++)h+=`<span class="dot${i<=qi?' act':''}"></span>`;$('dots').innerHTML=h;}
 function renderQ(){const Q=QUIZ[qi];$('qnum').textContent=`${qi+1} / ${QUIZ.length}`;$('qtext').textContent=Q.q;
   let h='';Q.o.forEach((o,i)=>h+=`<button class="opt" onclick="pick(${i})">${o[0]}</button>`);$('opts').innerHTML=h;renderDots();}
@@ -337,7 +450,7 @@ function finishQuiz(){let best=null,bv=-1;ORDER.forEach(k=>{if((scores[k]||0)>bv
   const cap=$('capsule');cap.className='capsule';cap.src=IMG.cap;cap.style.pointerEvents='none';
   $('knobHint').style.display='';$('knobHint').textContent='';$('pullBtn').style.display='';$('pullBtn').textContent='turn the knob';
   show('pull');}
-function rollFinish(){let r=Math.random()*100,c=0;for(const f of FIN){c+=f[2];if(r<=c)return f;}return FIN[0];}
+function rollFinish(boost){const table=boost?BOOST:FIN;let r=Math.random()*100,c=0;for(const f of table){c+=f[2];if(r<=c)return f;}return table[0];}
 let turning=false;
 function turnKnob(){if(turning)return;turning=true;pop();$('pullBtn').style.display='none';$('knobHint').textContent='';
   const cap=$('capsule');cap.className='capsule drop';
@@ -348,7 +461,7 @@ function openCap(){const cap=$('capsule');cap.onclick=null;cap.style.pointerEven
   setTimeout(()=>{$('flash').className='flash go';bling();},2240);
   setTimeout(()=>{turning=false;reveal();},2560);
   setTimeout(()=>{$('flash').className='flash';},2820);}
-function reveal(){finish=rollFinish();const A=ARCH[result];
+function reveal(){lastDaily=!dailyDone();finish=rollFinish(lastDaily);if(lastDaily)markDaily();const A=ARCH[result];
   $('coinImg').src=IMG[result];
   const fl=$('finishL');fl.className='finish '+finish[0];fl.style.setProperty('--m',`url(${IMG[result]})`);
   const cw=$('coinWrap');cw.className='coin-wrap '+(finish[0]==='prismatic'?'prismatic':finish[0]==='holo'?'holo':'');
@@ -357,7 +470,8 @@ function reveal(){finish=rollFinish();const A=ARCH[result];
   if(finish[0]==='holo'||finish[0]==='prismatic'){const pos=[[6,12],[84,8],[88,72],[4,76],[48,-4]];const n=finish[0]==='prismatic'?5:3;
     for(let i=0;i<n;i++){const s=document.createElement('div');s.className='cspark';s.textContent='✦';s.style.left=pos[i][0]+'%';s.style.top=pos[i][1]+'%';s.style.animationDelay=(i*.3)+'s';cw.appendChild(s);}}
   const cls=(finish[0]==='holo'||finish[0]==='prismatic')?finish[0]:'';
-  $('rarity').innerHTML=`<span class="pill ${cls}">FINISH · ${finish[1]} · ${finish[2]}%</span>`;
+  $('rarity').innerHTML=`<span class="pill ${cls}">FINISH · ${finish[1]} · ${finish[2]}%</span>`+(lastDaily?'<div style="margin-top:7px;font-size:11.5px;color:var(--ink2)">✦ daily pull · rare odds boosted ✦</div>':'');
+  const mb=$('matchBtn');if(incoming){mb.style.display='';mb.textContent='💘 see your match with '+ARCH[incoming].name;}else mb.style.display='none';
   $('cName').textContent=A.name;$('cDenom').textContent='legal tender · '+A.denom;$('cMotto').textContent=A.motto;
   $('cRead').textContent=A.read;$('cRead2').textContent=A.also;
   $('cPairs').textContent='→ '+ARCH[A.pairs].name+' — '+A.pairWhy;$('cFlag').textContent=A.flag;
@@ -365,7 +479,7 @@ function reveal(){finish=rollFinish();const A=ARCH[result];
   let sh='';A.stats.forEach(s=>sh+=`<div class="stat"><div class="lab"><span>${s[0]}</span><span>${s[1]}</span></div><div class="bar"><i data-w="${s[1]}"></i></div></div>`);
   $('cStats').innerHTML=sh;setTimeout(()=>document.querySelectorAll('.bar i').forEach(b=>b.style.width=b.dataset.w+'%'),120);
   if(finish[0]==='holo'||finish[0]==='prismatic')setTimeout(rareChime,260);
-  saveColl(result,finish[0]);renderColl();show('reveal');}
+  saveColl(result,finish[0]);renderColl();updateDaily();show('reveal');}
 function pullAgain(){pop();const cap=$('capsule');cap.className='capsule';cap.src=IMG.cap;cap.onclick=null;cap.style.pointerEvents='none';
   $('knobHint').style.display='';$('knobHint').textContent='';$('pullBtn').style.display='';$('pullBtn').textContent='turn the knob';show('pull');}
 
@@ -375,28 +489,90 @@ function renderColl(){const c=getColl();const make=el=>{let h='';c.slice().rever
   if(c.length){$('introColl').style.display='';make($('introShelf'));$('revColl').style.display='';make($('revShelf'));}}
 
 function wrap(ctx,t,x,y,mw,lh){const w=t.split(' ');let line='',yy=y;for(const word of w){const test=line+word+' ';if(ctx.measureText(test).width>mw&&line){ctx.fillText(line.trim(),x,yy);line=word+' ';yy+=lh;}else line=test;}ctx.fillText(line.trim(),x,yy);return yy;}
-function buildCard(){const A=ARCH[result],W=1080,H=1500,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+function rr(x,a,b,w,h,r){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath();}
+function buildCard(){const A=ARCH[result],W=1080,H=1500,cx=W/2,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
   const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,'#d7e9ff');g.addColorStop(.5,'#e6d8ff');g.addColorStop(1,'#ffdcf1');x.fillStyle=g;x.fillRect(0,0,W,H);
-  x.textAlign='center';x.fillStyle='#9a8bc0';x.font='600 30px Fredoka,sans-serif';x.fillText('HEARTTHROB GACHA',W/2,92);
-  const im=coinObj[result],cw=470,ch=im.height?cw*(im.height/im.width):cw,cx=W/2-cw/2,cy=130;try{x.drawImage(im,cx,cy,cw,ch);}catch(e){}
-  let ty=130+ch+66;x.fillStyle='#6b5a93';x.font='700 66px Fredoka,sans-serif';x.fillText(A.name,W/2,ty);ty+=44;
-  x.fillStyle='#9a8bc0';x.font='italic 28px Fredoka,sans-serif';x.fillText('legal tender · '+A.denom,W/2,ty);ty+=54;
-  x.fillStyle='#ff8ed0';x.font='600 30px Fredoka,sans-serif';x.fillText(A.motto,W/2,ty);ty+=64;
-  x.fillStyle='#6b5a93';x.font='500 36px Fredoka,sans-serif';ty=wrap(x,A.read,W/2,ty,880,50)+50;
-  x.fillStyle='#8a79b3';x.font='500 31px Fredoka,sans-serif';ty=wrap(x,A.also,W/2,ty,880,44)+56;
-  x.fillStyle='#7a6aa0';x.font='600 32px Fredoka,sans-serif';x.fillText('FINISH · '+finish[1]+' · '+finish[2]+'%',W/2,ty);ty+=50;
-  x.fillStyle='#ff8ed0';x.font='600 28px Fredoka,sans-serif';x.fillText('PAIRS WITH → '+ARCH[A.pairs].name,W/2,ty);
-  x.fillStyle='#9a8bc0';x.font='600 28px Fredoka,sans-serif';x.fillText("what's your romantic archetype?  ·  @karmenbuilds",W/2,H-46);
+  x.textAlign='center';
+  x.fillStyle='#9a8bc0';x.font='600 30px Fredoka,sans-serif';x.fillText('HEARTTHROB GACHA',cx,82);
+  x.fillStyle='#ff8ed0';x.font='600 23px Fredoka,sans-serif';x.fillText('✦ '+SEASON.name.toUpperCase()+' EDITION ✦',cx,120);
+  // coin + finish glow + sheen
+  const im=coinObj[result],cw=420,ch=im.height?cw*(im.height/im.width):cw,coinX=cx-cw/2,cy=150,coinCY=cy+ch/2;
+  const glow={clear:'rgba(255,255,255,0)',chrome:'rgba(200,210,235,.55)',holo:'rgba(180,150,255,.6)',prismatic:'rgba(255,120,220,.7)'}[finish[0]];
+  if(finish[0]!=='clear'){const rg=x.createRadialGradient(cx,coinCY,30,cx,coinCY,cw*.72);rg.addColorStop(0,glow);rg.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=rg;x.fillRect(cx-cw,cy-50,cw*2,ch+130);}
+  try{x.drawImage(im,coinX,cy,cw,ch);}catch(e){}
+  if(finish[0]==='holo'||finish[0]==='prismatic'){x.save();x.globalCompositeOperation='overlay';x.globalAlpha=finish[0]==='prismatic'?.5:.34;
+    const sg=x.createLinearGradient(coinX,cy,coinX+cw,cy+ch);['#ff9aa2','#ffd59e','#fdff9e','#9affd0','#9ad8ff','#d6a0ff','#ff9aff'].forEach((col,i,a)=>sg.addColorStop(i/(a.length-1),col));
+    x.fillStyle=sg;x.beginPath();x.arc(cx,coinCY,cw*.42,0,7);x.fill();x.restore();}
+  let ty=cy+ch+44;
+  // rarity pill
+  const pw=440,ph=54,px=cx-pw/2;x.fillStyle=finish[0]==='prismatic'?'#ff8fc8':finish[0]==='holo'?'#c9b3ff':'rgba(255,255,255,.82)';rr(x,px,ty,pw,ph,27);x.fill();
+  x.fillStyle=(finish[0]==='clear'||finish[0]==='chrome')?'#7a6aa0':'#fff';x.font='600 26px Fredoka,sans-serif';x.fillText('FINISH · '+finish[1]+' · '+finish[2]+'%',cx,ty+35);ty+=ph+60;
+  // name / denom / motto
+  x.fillStyle='#6b5a93';x.font='700 68px Fredoka,sans-serif';x.fillText(A.name,cx,ty);ty+=42;
+  x.fillStyle='#9a8bc0';x.font='italic 27px Fredoka,sans-serif';x.fillText('legal tender · '+A.denom,cx,ty);ty+=48;
+  x.fillStyle='#ff8ed0';x.font='600 29px Fredoka,sans-serif';x.fillText(A.motto,cx,ty);ty+=54;
+  // stat bars
+  const bw=640,bx=cx-bw/2;A.stats.forEach(s=>{x.textAlign='left';x.fillStyle='#6b5a93';x.font='600 25px Fredoka,sans-serif';x.fillText(s[0],bx,ty);
+    x.textAlign='right';x.fillText(s[1],bx+bw,ty);x.textAlign='center';ty+=12;
+    x.fillStyle='#efe6f7';rr(x,bx,ty,bw,16,8);x.fill();
+    const fg=x.createLinearGradient(bx,0,bx+bw,0);fg.addColorStop(0,'#ffb3df');fg.addColorStop(1,'#b39bff');x.fillStyle=fg;rr(x,bx,ty,bw*s[1]/100,16,8);x.fill();ty+=42;});
+  ty+=14;
+  // read + pairs
+  x.fillStyle='#6b5a93';x.font='500 33px Fredoka,sans-serif';ty=wrap(x,A.read,cx,ty,860,46)+44;
+  x.fillStyle='#ff8ed0';x.font='600 28px Fredoka,sans-serif';x.fillText('PAIRS WITH → '+ARCH[A.pairs].name,cx,ty);
+  // loud CTA band — the image IS the ad
+  const by=H-152;const cg=x.createLinearGradient(0,by,W,by);cg.addColorStop(0,'#ffa6db');cg.addColorStop(1,'#a98fff');x.fillStyle=cg;x.fillRect(0,by,W,152);
+  x.fillStyle='#fff';x.font='700 41px Fredoka,sans-serif';x.fillText("what's YOUR romantic archetype? 👉",cx,by+64);
+  x.font='600 29px Fredoka,sans-serif';x.fillText('play free · @karmenbuilds',cx,by+110);
   return c;}
 function dl(canvas){const a=document.createElement('a');a.download='heartthrob-'+result+'.png';a.href=canvas.toDataURL('image/png');a.click();}
 async function shareCard(){pop();const canvas=buildCard();const cap=`apparently i'm "${ARCH[result].name}" (${finish[1]} finish). what's your romantic archetype?`;
   if(navigator.canShare){try{const b=await new Promise(r=>canvas.toBlob(r,'image/png'));const file=new File([b],'heartthrob.png',{type:'image/png'});
     if(navigator.canShare({files:[file]})){await navigator.share({files:[file],text:cap});return;}}catch(e){}}
   dl(canvas);try{await navigator.clipboard.writeText(cap);toast('saved! caption copied');}catch(e){toast('card saved');}}
-async function compareFriend(){pop();const t=`what's your romantic archetype? i'm "${ARCH[result].name}". take it: ${location.href}`;
+
+/* ---------- COMPATIBILITY (two-player reveal) ---------- */
+function openCompat(){pop();cmpThem=null;renderVsYou();renderPickGrid();resetCompat();show('compat');}
+function renderVsYou(){$('vsYou').className='vs-coin';$('vsYou').innerHTML=`<img src="${IMG[result]}">`;$('vsYouN').textContent=ARCH[result].name;}
+function renderPickGrid(){let h='';ORDER.forEach(k=>{h+=`<div class="pickcell" onclick="pickFriend('${k}')"><img src="${IMG[k]}"><span>${ARCH[k].name}</span></div>`;});$('pickGrid').innerHTML=h;}
+function resetCompat(){tick();$('cmpResult').style.display='none';$('pickGrid').style.display='';$('sendTypeBtn').style.display='';
+  $('vsThem').className='vs-coin q';$('vsThem').textContent='?';$('vsThemN').textContent='?';$('cmpKick').textContent="tap your situationship's type 👇";}
+function pickFriend(k){tick();cmpThem=k;$('vsThem').className='vs-coin';$('vsThem').innerHTML=`<img src="${IMG[k]}">`;$('vsThemN').textContent=ARCH[k].name;
+  const r=compat(result,k);$('cmpVerdict').textContent=r.v;$('cmpScore').textContent='CHEMISTRY · '+r.s+'%';$('cmpLine').textContent=r.l;
+  $('pickGrid').style.display='none';$('sendTypeBtn').style.display='none';$('cmpResult').style.display='flex';$('cmpKick').textContent='the verdict is in.';
+  const bar=$('cmpBar');bar.style.width='0';setTimeout(()=>bar.style.width=r.s+'%',120);r.s>=75?rareChime():chime();}
+function backFromCompat(){tick();show('reveal');}
+function openIncomingMatch(){if(!incoming)return;openCompat();pickFriend(incoming);}
+async function shareMatch(){pop();const a=ARCH[result].name,b=ARCH[cmpThem].name,r=compat(result,cmpThem);
+  const t=`${a} ✕ ${b} = ${r.v} — ${r.s}% chemistry. what's your romantic archetype? find out + match me 👉 ${location.origin+location.pathname}#m=${result}`;
   if(navigator.share){try{await navigator.share({text:t});return;}catch(e){}}
-  try{await navigator.clipboard.writeText(t);toast('invite copied — send it');}catch(e){toast(t);}}
-renderColl();
+  try{await navigator.clipboard.writeText(t);toast('match copied — send it 💌');}catch(e){toast('copied');}}
+async function shareMyType(){pop();const link=location.origin+location.pathname+'#m='+result;
+  const t=`i'm "${ARCH[result].name}". take the quiz and see if we're matched in hell 😈 ${link}`;
+  if(navigator.share){try{await navigator.share({text:t});return;}catch(e){}}
+  try{await navigator.clipboard.writeText(t);toast('invite copied — send it');}catch(e){toast('copied');}}
+
+/* ---------- DAILY PULL ---------- */
+function todayStr(){const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+function dailyDone(){try{return localStorage.getItem('hg_daily')===todayStr();}catch(e){return false;}}
+function markDaily(){try{localStorage.setItem('hg_daily',todayStr());}catch(e){}}
+function updateDaily(){const d=$('dailyBadge');if(dailyDone()){d.className='daily spent';d.textContent='✓ daily pull claimed · back tomorrow';}
+  else{d.className='daily';d.textContent='✦ daily pull ready · rare odds boosted';}}
+
+/* ---------- PRE-QUIZ TEASER ---------- */
+let teaserI=0,teaserTimer=null;
+function teaserStep(){const k=ORDER[teaserI%ORDER.length],A=ARCH[k],t=$('teaser');t.classList.add('fadeo');
+  setTimeout(()=>{$('teaserImg').src=IMG[k];$('teaserN').textContent=A.name;$('teaserM').textContent=A.motto;t.classList.remove('fadeo');},300);teaserI++;}
+function startTeaser(){$('teaser').style.display='';if(teaserTimer)return;teaserStep();teaserTimer=setInterval(teaserStep,2600);}
+function stopTeaser(){if(teaserTimer){clearInterval(teaserTimer);teaserTimer=null;}}
+
+/* ---------- INCOMING MATCH (shared link) ---------- */
+function parseHash(){const m=(location.hash||'').match(/m=([a-z]+)/);incoming=(m&&ARCH[m[1]])?m[1]:null;}
+function updateMatchBar(){const b=$('matchBar');if(incoming){b.style.display='';b.innerHTML=`💌 a friend pulled <b>${ARCH[incoming].name}</b> — take the quiz to see if you two match.`;}else b.style.display='none';}
+
+function init(){$('edition').innerHTML='✦ <b>'+SEASON.name+'</b> edition '+SEASON.emoji;
+  parseHash();updateMatchBar();updateDaily();startTeaser();renderColl();}
+init();
 </script>
 </body>
 </html>
