@@ -3,7 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>heartthrob gacha</title>
+<title>heartthrob gacha — what's your romantic archetype?</title>
+<meta name="description" content="answer 7 questions, get lovingly attacked, and pull a collectible coin you probably deserve.">
+<!-- social link unfurl -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="heartthrob gacha">
+<meta property="og:title" content="what's your romantic archetype? 💘">
+<meta property="og:description" content="answer 7 questions, get lovingly attacked, and pull a collectible coin you probably deserve.">
+<meta property="og:image" content="https://throb-six.vercel.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://throb-six.vercel.app/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="what's your romantic archetype? 💘">
+<meta name="twitter:description" content="answer 7 questions, get lovingly attacked, pull a collectible coin you probably deserve.">
+<meta name="twitter:image" content="https://throb-six.vercel.app/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -486,43 +500,44 @@ function renderColl(){const c=getColl();if(!c.length)return;let h='';c.slice().r
 
 function wrap(ctx,t,x,y,mw,lh){const w=t.split(' ');let line='',yy=y;for(const word of w){const test=line+word+' ';if(ctx.measureText(test).width>mw&&line){ctx.fillText(line.trim(),x,yy);line=word+' ';yy+=lh;}else line=test;}ctx.fillText(line.trim(),x,yy);return yy;}
 function rr(x,a,b,w,h,r){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath();}
-function buildCard(){const A=ARCH[result],W=1080,H=1500,cx=W/2,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+function buildCard(){const A=ARCH[result],W=1080,H=1920,cx=W/2,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
   const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,'#d7e9ff');g.addColorStop(.5,'#e6d8ff');g.addColorStop(1,'#ffdcf1');x.fillStyle=g;x.fillRect(0,0,W,H);
   x.textAlign='center';
-  x.fillStyle='#9a8bc0';x.font='600 30px Fredoka,sans-serif';x.fillText('HEARTTHROB GACHA',cx,82);
-  x.fillStyle='#ff8ed0';x.font='600 23px Fredoka,sans-serif';x.fillText('✦ '+SEASON.name.toUpperCase()+' EDITION ✦',cx,120);
+  x.fillStyle='#9a8bc0';x.font='600 34px Fredoka,sans-serif';x.fillText('HEARTTHROB GACHA',cx,108);
+  x.fillStyle='#ff8ed0';x.font='600 25px Fredoka,sans-serif';x.fillText('✦ '+SEASON.name.toUpperCase()+' EDITION ✦',cx,152);
   // coin + finish glow + sheen
-  const im=coinObj[result],cw=420,ch=im.height?cw*(im.height/im.width):cw,coinX=cx-cw/2,cy=150,coinCY=cy+ch/2;
+  const im=coinObj[result],cw=480,ch=im.height?cw*(im.height/im.width):cw,coinX=cx-cw/2,cy=200,coinCY=cy+ch/2;
   const glow={clear:'rgba(255,255,255,0)',chrome:'rgba(200,210,235,.55)',holo:'rgba(180,150,255,.6)',prismatic:'rgba(255,120,220,.7)'}[finish[0]];
   if(finish[0]!=='clear'){const rg=x.createRadialGradient(cx,coinCY,30,cx,coinCY,cw*.72);rg.addColorStop(0,glow);rg.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=rg;x.fillRect(cx-cw,cy-50,cw*2,ch+130);}
   try{x.drawImage(im,coinX,cy,cw,ch);}catch(e){}
   if(finish[0]==='holo'||finish[0]==='prismatic'){x.save();x.globalCompositeOperation='overlay';x.globalAlpha=finish[0]==='prismatic'?.5:.34;
     const sg=x.createLinearGradient(coinX,cy,coinX+cw,cy+ch);['#ff9aa2','#ffd59e','#fdff9e','#9affd0','#9ad8ff','#d6a0ff','#ff9aff'].forEach((col,i,a)=>sg.addColorStop(i/(a.length-1),col));
     x.fillStyle=sg;x.beginPath();x.arc(cx,coinCY,cw*.42,0,7);x.fill();x.restore();}
-  let ty=cy+ch+44;
+  let ty=cy+ch+58;
   // rarity pill
-  const pw=440,ph=54,px=cx-pw/2;x.fillStyle=finish[0]==='prismatic'?'#ff8fc8':finish[0]==='holo'?'#c9b3ff':'rgba(255,255,255,.82)';rr(x,px,ty,pw,ph,27);x.fill();
-  x.fillStyle=(finish[0]==='clear'||finish[0]==='chrome')?'#7a6aa0':'#fff';x.font='600 26px Fredoka,sans-serif';x.fillText('FINISH · '+finish[1]+' · '+finish[2]+'%',cx,ty+35);ty+=ph+60;
+  const pw=470,ph=58,px=cx-pw/2;x.fillStyle=finish[0]==='prismatic'?'#ff8fc8':finish[0]==='holo'?'#c9b3ff':'rgba(255,255,255,.82)';rr(x,px,ty,pw,ph,29);x.fill();
+  x.fillStyle=(finish[0]==='clear'||finish[0]==='chrome')?'#7a6aa0':'#fff';x.font='600 28px Fredoka,sans-serif';x.fillText('FINISH · '+finish[1]+' · '+finish[2]+'%',cx,ty+38);ty+=ph+72;
   // name / denom / motto
-  x.fillStyle='#6b5a93';x.font='700 68px Fredoka,sans-serif';x.fillText(A.name,cx,ty);ty+=42;
-  x.fillStyle='#9a8bc0';x.font='italic 27px Fredoka,sans-serif';x.fillText('legal tender · '+A.denom,cx,ty);ty+=48;
-  x.fillStyle='#ff8ed0';x.font='600 29px Fredoka,sans-serif';x.fillText(A.motto,cx,ty);ty+=54;
+  x.fillStyle='#6b5a93';x.font='700 78px Fredoka,sans-serif';x.fillText(A.name,cx,ty);ty+=52;
+  x.fillStyle='#9a8bc0';x.font='italic 30px Fredoka,sans-serif';x.fillText('legal tender · '+A.denom,cx,ty);ty+=58;
+  x.fillStyle='#ff8ed0';x.font='600 32px Fredoka,sans-serif';x.fillText(A.motto,cx,ty);ty+=70;
   // stat bars
-  const bw=640,bx=cx-bw/2;A.stats.forEach(s=>{x.textAlign='left';x.fillStyle='#6b5a93';x.font='600 25px Fredoka,sans-serif';x.fillText(s[0],bx,ty);
-    x.textAlign='right';x.fillText(s[1],bx+bw,ty);x.textAlign='center';ty+=12;
-    x.fillStyle='#efe6f7';rr(x,bx,ty,bw,16,8);x.fill();
-    const fg=x.createLinearGradient(bx,0,bx+bw,0);fg.addColorStop(0,'#ffb3df');fg.addColorStop(1,'#b39bff');x.fillStyle=fg;rr(x,bx,ty,bw*s[1]/100,16,8);x.fill();ty+=42;});
-  ty+=14;
+  const bw=680,bx=cx-bw/2;A.stats.forEach(s=>{x.textAlign='left';x.fillStyle='#6b5a93';x.font='600 27px Fredoka,sans-serif';x.fillText(s[0],bx,ty);
+    x.textAlign='right';x.fillText(s[1],bx+bw,ty);x.textAlign='center';ty+=16;
+    x.fillStyle='#efe6f7';rr(x,bx,ty,bw,18,9);x.fill();
+    const fg=x.createLinearGradient(bx,0,bx+bw,0);fg.addColorStop(0,'#ffb3df');fg.addColorStop(1,'#b39bff');x.fillStyle=fg;rr(x,bx,ty,bw*s[1]/100,18,9);x.fill();ty+=52;});
+  ty+=26;
   // read + pairs
-  x.fillStyle='#6b5a93';x.font='500 33px Fredoka,sans-serif';ty=wrap(x,A.read,cx,ty,860,46)+44;
-  x.fillStyle='#ff8ed0';x.font='600 28px Fredoka,sans-serif';x.fillText('PAIRS WITH → '+ARCH[A.pairs].name,cx,ty);
+  x.fillStyle='#6b5a93';x.font='500 36px Fredoka,sans-serif';ty=wrap(x,A.read,cx,ty,900,50)+58;
+  x.fillStyle='#ff8ed0';x.font='600 31px Fredoka,sans-serif';x.fillText('PAIRS WITH → '+ARCH[A.pairs].name,cx,ty);
   // loud CTA band — the image IS the ad
-  const by=H-152;const cg=x.createLinearGradient(0,by,W,by);cg.addColorStop(0,'#ffa6db');cg.addColorStop(1,'#a98fff');x.fillStyle=cg;x.fillRect(0,by,W,152);
-  x.fillStyle='#fff';x.font='700 41px Fredoka,sans-serif';x.fillText("what's YOUR romantic archetype? 👉",cx,by+64);
-  x.font='600 29px Fredoka,sans-serif';x.fillText('play free · @karmenbuilds',cx,by+110);
+  const by=H-190;const cg=x.createLinearGradient(0,by,W,by);cg.addColorStop(0,'#ffa6db');cg.addColorStop(1,'#a98fff');x.fillStyle=cg;x.fillRect(0,by,W,190);
+  x.fillStyle='#fff';x.font='700 46px Fredoka,sans-serif';x.fillText("what's YOUR romantic archetype? 👉",cx,by+82);
+  x.font='600 32px Fredoka,sans-serif';x.fillText('play free · @karmenbuilds',cx,by+136);
   return c;}
 function dl(canvas){const a=document.createElement('a');a.download='heartthrob-'+result+'.png';a.href=canvas.toDataURL('image/png');a.click();}
-async function shareCard(){pop();const canvas=buildCard();const cap=`apparently i'm "${ARCH[result].name}" (${finish[1]} finish). what's your romantic archetype?`;
+async function shareCard(){pop();const canvas=buildCard();const link=location.origin+location.pathname;
+  const cap=`POV: the machine called me "${ARCH[result].name}" 💀 (${finish[1]} finish)\n\nwhat's your romantic archetype? → ${link}`;
   if(navigator.canShare){try{const b=await new Promise(r=>canvas.toBlob(r,'image/png'));const file=new File([b],'heartthrob.png',{type:'image/png'});
     if(navigator.canShare({files:[file]})){await navigator.share({files:[file],text:cap});return;}}catch(e){}}
   dl(canvas);try{await navigator.clipboard.writeText(cap);toast('saved! caption copied');}catch(e){toast('card saved');}}
